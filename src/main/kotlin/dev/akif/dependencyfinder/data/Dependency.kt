@@ -21,12 +21,7 @@ data class Dependency(val name: String) {
         }
 
     fun dependsOn(existing: Dependency) {
-        if (name == existing.name) {
-            throw UnsupportedOperationException("Dependency '$name' cannot depend on itself!")
-        } else {
-            println("Adding '${existing.name}' to '${this.name}' as a dependency")
-            dependencies.add(existing)
-        }
+        dependencies.add(existing)
     }
 
     override fun toString(): String =

@@ -9,7 +9,16 @@ class Dependencies(private val logger: Logger) {
     fun find(name: String): Dependency? =
         dependencies.firstMatching { it.find(name) }
 
-    fun add(fromName: String?, newName: String) {
+    fun addDirectly(newName: String) =
+        add(null, newName)
+
+    fun addTo(fromName: String, newName: String) =
+        add(fromName, newName)
+
+    fun dependencies(): Set<Dependency> =
+        dependencies.toSet()
+
+    private fun add(fromName: String?, newName: String) {
         // Look for a reference to the dependency we want to add.
         val existingDependency = find(newName)
 
@@ -20,9 +29,17 @@ class Dependencies(private val logger: Logger) {
                 val newDependency = Dependency(newName)
                 dependencies.add(newDependency)
             } else {
-                // We found a reference to the dependency we want to add, add directly.
-                dependencies.add(existingDependency)
+                // We found a reference to the dependency we want to add.
+                if (dependencies.any { dependency -> dependency.name == newName }) {
+                    // The reference we found is a direct dependency already.
+                    logger.log("Dependency '$newName' is already added as a direct dependency, skipping.")
+                } else {
+                    // The reference we found is a transitive dependency of something else so add it as a direct dependency.
+                    dependencies.add(existingDependency)
+                }
             }
+        } else if (fromName == newName) {
+            logger.die("Dependency '$fromName' cannot depend on itself!")
         } else {
             // We are adding dependency to an existing one.
             val fromDependency = find(fromName)

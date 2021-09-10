@@ -19,11 +19,11 @@ class Loader(private val file: String, private val logger: Logger) {
                     val parts = line.split(" ")
 
                     if (parts.isNotEmpty()) {
-                        val first = parts.first()
+                        val newName = parts.first()
                         val others = parts.drop(1)
 
-                        add(null, first)
-                        others.forEach { add(first, it) }
+                        addDirectly(newName)
+                        others.forEach { name -> addTo(newName, name) }
                     }
                 }
             }

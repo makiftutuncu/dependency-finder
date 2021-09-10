@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
 }
 
 fun loop(dependencies: Dependencies) {
-    println("Parsed dependencies: $dependencies")
+    println("Parsed dependencies:\n$dependencies")
 }
 
 fun printHelp(args: Array<String>) {
