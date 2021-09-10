@@ -3,6 +3,9 @@ package dev.akif.dependencyfinder.logging
 import java.util.Scanner
 import kotlin.system.exitProcess
 
+/**
+ * A console based implementation of IO reading from and printing to the default console.
+ */
 object ConsoleIO: IO {
     private val scanner = Scanner(System.`in`)
 

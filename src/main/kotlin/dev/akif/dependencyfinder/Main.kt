@@ -21,6 +21,12 @@ fun main(args: Array<String>) {
         .getOrThrow()
 }
 
+/**
+ * Program loop for user interaction.
+ *
+ * @param dependencies Dependency graph
+ * @param io           IO to use for user interaction
+ */
 fun loop(dependencies: Dependencies, io: IO) {
     io.print("Parsed ${dependencies.size()} dependencies.")
     while (true) {
@@ -43,6 +49,12 @@ fun loop(dependencies: Dependencies, io: IO) {
     }
 }
 
+/**
+ * Prints help message explaining correct usage of the program.
+ *
+ * @param args Program arguments
+ * @param io   IO to use for user interaction
+ */
 fun printHelp(args: Array<String>, io: IO) {
     io.die(
         """
