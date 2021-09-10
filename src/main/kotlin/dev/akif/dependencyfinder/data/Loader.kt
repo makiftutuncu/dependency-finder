@@ -1,20 +1,20 @@
 package dev.akif.dependencyfinder.data
 
-import dev.akif.dependencyfinder.logging.Logger
+import dev.akif.dependencyfinder.logging.IO
 import java.io.File
 
-class Loader(private val file: String, private val logger: Logger) {
+class Loader(private val file: String, private val io: IO) {
     fun readFile(): Result<List<String>> =
         runCatching {
             File(file).readLines(Charsets.UTF_8)
         }.onFailure { e ->
-            logger.die("Cannot read input file '$file'!", e)
+            io.die("Cannot read input file '$file'!", e)
         }
 
     fun parse(lines: List<String>): Result<Dependencies> =
         runCatching {
-            logger.log("Parsing file '$file'")
-            Dependencies(logger).apply {
+            io.print("Parsing file '$file'")
+            Dependencies(io).apply {
                 lines.forEach { line ->
                     val parts = line.split(" ")
 
@@ -28,6 +28,6 @@ class Loader(private val file: String, private val logger: Logger) {
                 }
             }
         }.onFailure { e ->
-            logger.die("Cannot parse input file '$file'!", e)
+            io.die("Cannot parse input file '$file'!", e)
         }
 }

@@ -1,17 +1,31 @@
 package dev.akif.dependencyfinder.logging
 
+import java.util.*
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class TestLogger: Logger {
-    val logs: MutableList<String> = mutableListOf()
+class TestIO: IO {
+    private val logs: MutableList<String> = mutableListOf()
+    private val inputs: Queue<String> = ArrayDeque()
 
-    override fun log(message: String) {
+    override fun print(message: String) {
         logs.add(message)
     }
 
     override fun die(message: String, error: Throwable?) {
         logs.add(message)
         error?.message?.let { logs.add(it) }
+    }
+
+    fun input(text: String) {
+        inputs.offer(text)
+    }
+
+    override fun prompt(prefix: String): String =
+        inputs.poll()
+
+    fun assertLogs(expected: List<String>) {
+        assertEquals(expected, logs.toList())
     }
 
     fun assertLogsContains(log: String) {

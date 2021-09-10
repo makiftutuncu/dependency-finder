@@ -1,6 +1,7 @@
 package dev.akif.dependencyfinder.logging
 
-interface Logger {
-    fun log(message: String)
+interface IO {
+    fun print(message: String)
     fun die(message: String, error: Throwable? = null)
+    fun prompt(prefix: String): String
 }

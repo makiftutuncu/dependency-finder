@@ -1,12 +1,12 @@
 package dev.akif.dependencyfinder.data
 
-import dev.akif.dependencyfinder.logging.TestLogger
+import dev.akif.dependencyfinder.logging.TestIO
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class DependenciesTest {
-    private val logger = TestLogger()
+    private val logger = TestIO()
 
     @Test
     fun `finding a dependency returns null when it is not found`() {
